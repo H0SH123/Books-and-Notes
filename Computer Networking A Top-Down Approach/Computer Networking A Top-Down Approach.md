@@ -65,7 +65,7 @@ TCP(Transmission Control Protocol,传输控制协议)和IP (Internet Protocol,�
 - 非导引型媒介(unguidedmedia)
     - 电波在空气或外层空间中传播，例如在无线局域网或数字卫星频道中传播
 
-各种物理媒介的比较：  
+各种物理媒介的比较： 
 1.双绞铜线
 - 双绞线由两根绝缘的铜线组成，每根大约1mm粗，以规则的螺旋状排列着。这两根线被绞合起来，以减少邻近类似的双绞线的电气干扰。
 - 通常许多双绞线捆扎在一起形成一根电缆，并在这些双绞线外面覆盖上保护性防护层。一对电线构成了一条通信链路。
@@ -163,7 +163,7 @@ TCP(Transmission Control Protocol,传输控制协议)和IP (Internet Protocol,�
 - 如今的因特网
 - 通过在网络结构4顶部增加内容提供商网络（content provider network）构建而成。
 
-![ISP的互联](images/image-1-1.png "ISP的互联")
+![ISP的互联](./images/image-1-1.png "ISP的互联")
 
 ### 1.4 分组交换网中的时延、丢包和吞吐量
 #### 分组交换网中的时延
