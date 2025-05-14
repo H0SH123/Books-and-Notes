@@ -4,21 +4,31 @@
   <meta charset="UTF-8">
   <title>我的笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Docsify 样式 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+
+  <!-- ✅ KaTeX 样式 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
 </head>
 <body>
   <div id="app">加载中…</div>
+
   <script>
     window.$docsify = {
       name: '笔记文档',
-      repo: '',
       loadSidebar: true,
       subMaxLevel: 2
     };
   </script>
+
+  <!-- ✅ Docsify 本体 -->
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+
+  <!-- ✅ KaTeX 渲染引擎 -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+  <!-- ✅ docsify-katex 插件：核心必须加载 -->
   <script src="https://cdn.jsdelivr.net/npm/docsify-katex@1.0.5/dist/docsify-katex.min.js"></script>
 </body>
 </html>
