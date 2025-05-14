@@ -656,7 +656,7 @@ $$
 
 这个模型的一般形式为
 
-- 决策函数：$Y=f(x)$
+- 决策函数：$ Y=f(x) $
 - 条件分布概率：$P(Y|X)$
 
 监督学习方法又可以分为**生成方法 (generative approach)**和**判别方法 (discriminative approach)**。所学到的模型分别称为**生成模型(generative model)** 和**判别模型 (discriminative model)**。
