@@ -142,10 +142,12 @@ $$
 
 - $S$ 是有限状态（state）的集合  
 - $A$ 是有限动作（action）的集合  
-- $P$ 是状态转移概率（transition probability）函数：  
+- $P$ 是状态转移概率（transition probability）函数：
+   
   $$
   P(s'|s,a) = P(s_{t+1} = s' | s_t = s, a_t = a)
   $$
+  
 - $r$ 是奖励函数（reward function）：$r(s,a) = \mathbb{E}(r_{t+1} | s_t = s, a_t = a)$  
 - $\gamma$ 是衰减系数（discount factor）：$\gamma \in [0, 1]$
 
