@@ -49,7 +49,6 @@ $$
 $$
 sim(i_1, i_2) = \frac{\sum_{v \in \mathcal{V}} like(v, i_1) \cdot like(v, i_2)}
 {\sqrt{\sum_{u_1 \in \mathcal{W}_1} like^2(u_1, i_1)} \cdot \sqrt{\sum_{u_2 \in \mathcal{W}_2} like^2(u_2, i_2)}}\ 
-余弦相似度（cosine\ similarity）
 $$
 
 #### ItemCF 召回的完整流程
