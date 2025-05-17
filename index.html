@@ -7,9 +7,6 @@
 
   <!-- Docsify 样式 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
-
-  <!-- ✅ KaTeX 样式 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
 </head>
 <body>
   <div id="app">加载中…</div>
@@ -22,16 +19,16 @@
     };
   </script>
 
-  <!-- ✅ Docsify 本体 -->
+  <!-- ✅ Docsify 主体 -->
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
 
-  <!-- ✅ KaTeX 渲染引擎 -->
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-
-  <!-- ✅ docsify-katex 插件：核心必须加载 -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify-katex@1.0.5/dist/docsify-katex.min.js"></script>
+  <!-- ✅ MathJax 支持 (放在 Docsify 脚本后面) -->
+  <script type="text/javascript" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
 </body>
 </html>
+
 
 
 
