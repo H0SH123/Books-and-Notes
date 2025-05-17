@@ -16,7 +16,7 @@
 
 物品之间的相似度： $sim(item_j, item)$
 
-预估用户对候选物品的兴趣：$\sum_j like(user, item_j) \times sim(item_j, item)$
+预估用户对候选物品的兴趣： $\sum_j like(user, item_j) \times sim(item_j, item)$
 
 #### 物品的相似度
 
@@ -35,6 +35,7 @@
 $$
 sim(i_1, i_2) = \frac{|\mathcal{V}|}{\sqrt{|\mathcal{W}_1| \cdot |\mathcal{W}_2|}}。
 $$
+
 **计算物品相似度(考虑用户喜欢的程度)**
 
 喜欢物品 $i_1$ 的用户记作集合 $\mathcal{W}_1$
@@ -44,6 +45,7 @@ $$
 定义交集 $\mathcal{V} = \mathcal{W}_1 \cap \mathcal{W}_2$
 
 两个物品的相似度：
+
 $$
 sim(i_1, i_2) = \frac{\sum_{v \in \mathcal{V}} like(v, i_1) \cdot like(v, i_2)}
 {\sqrt{\sum_{u_1 \in \mathcal{W}_1} like^2(u_1, i_1)} \cdot \sqrt{\sum_{u_2 \in \mathcal{W}_2} like^2(u_2, i_2)}}\ 
@@ -78,15 +80,16 @@ $$
 
 **ItemCF的原理**
 
-用户喜欢物品 $i_1$，那么用户喜欢与物品 $i_1$ 相似的物品 $i_2$。
+用户喜欢物品 $i_1$ ，那么用户喜欢与物品 $i_1$ 相似的物品 $i_2$。
 
 物品相似度：
 - 如果喜欢 $i_1$、$i_2$ 的用户有很大的重叠，那么 $i_1$ 与 $i_2$ 相似。
 
 - 公式：
-  $$
-  sim(i_1, i_2) = \frac{|\mathcal{W}_1 \cap \mathcal{W}_2|}{\sqrt{|\mathcal{W}_1| \cdot |\mathcal{W}_2|}}
-  $$
+
+$$
+sim(i_1, i_2) = \frac{|\mathcal{W}_1 \cap \mathcal{W}_2|}{\sqrt{|\mathcal{W}_1| \cdot |\mathcal{W}_2|}}
+$$
 
 **ItemCF 召回通道**
 
@@ -98,9 +101,9 @@ $$
 - 利用两个索引，每次取回 $nk$ 个物品。
 - 预估用户对每个物品的兴趣分数：
 
-  $$
-  \sum_j like(user, item_j) \times sim(item_j, item)。
-  $$
+$$
+\sum_j like(user, item_j) \times sim(item_j, item)。
+$$
 
 - 返回分数最高的 100 个物品，作为召回结果。
 
@@ -113,9 +116,11 @@ $$
 用户 $u_2$ 喜欢的物品记作集合 $\mathcal{J}_2$。
 
 定义两个用户的重合度：
+
 $$
 \textbf{overlap}(u_1, u_2) = |\mathcal{J}_1 \cap \mathcal{J}_2|
 $$
+
 用户 $u_1$ 和 $u_2$ 的重合度高，则他们可能来自一个小圈子，要降低他们的权重。
 
 #### Swing 模型
@@ -127,6 +132,7 @@ $$
 定义交集 $\mathcal{V} = \mathcal{W}_1 \cap \mathcal{W}_2$。
 
 两个物品的相似度：
+
 $$
 sim(i_1, i_2) = \sum_{u_1 \in \mathcal{V}} \sum_{u_2 \in \mathcal{V}} \frac{1}{\alpha + \text{overlap}(u_1, u_2)}
 $$
@@ -154,7 +160,7 @@ $$
 
 用户对物品的兴趣： $like(user_j, item)$
 
-预估用户对候选物品的兴趣：$\sum_j sim(user, user_j) \times like(user_j, item)$
+预估用户对候选物品的兴趣： $\sum_j sim(user, user_j) \times like(user_j, item)$
 
 #### 用户的相似度
 
@@ -171,6 +177,7 @@ $$
 $$
 sim(u_1, u_2) = \frac{|I|}{\sqrt{|\mathcal{J}_1| \cdot |\mathcal{J}_2|}}
 $$
+
 **降低热门物品权重**
 
 用户 $u_1$ 喜欢的物品记作集合 $\mathcal{J}_1$。
@@ -184,6 +191,7 @@ $$
 $$
 sim(u_1, u_2) = \frac{\sum_{l \in I} \frac{1}{\log(1 + n_l)}}{\sqrt{|\mathcal{J}_1| \cdot |\mathcal{J}_2|}}。
 $$
+
 其中，$n_l$ 表示喜欢物品 $l$ 的用户数量，反映物品的热门程度。
 
 #### UserCF 召回的完整流程
@@ -218,9 +226,9 @@ $$
 - 如果用户 $u_1$ 和 $u_2$ 喜欢的物品有很大的重叠，那么 $u_1$ 和 $u_2$ 相似。
 - **公式**：
 
-  $$
-  sim(u_1, u_2) = \frac{|\mathcal{J}_1 \cap \mathcal{J}_2|}{\sqrt{|\mathcal{J}_1| \cdot |\mathcal{J}_2|}}。
-  $$
+$$
+sim(u_1, u_2) = \frac{|\mathcal{J}_1 \cap \mathcal{J}_2|}{\sqrt{|\mathcal{J}_1| \cdot |\mathcal{J}_2|}}。
+$$
 
 **UserCF 召回通道**
 
@@ -234,10 +242,10 @@ $$
 - 利用两个索引，每次取回 $nk$ 个物品。
 - 预估用户 $user$ 对每个物品 $item$ 的兴趣分数：
 
-  $$
-  \sum_j sim(user, user_j) \times like(user_j, item)。
-  $$
-  
+$$
+\sum_j sim(user, user_j) \times like(user_j, item)。
+$$
+
 - 返回分数最高的 100 个物品，作为召回结果。
 
 ### 离散特征处理
@@ -327,10 +335,10 @@ $\Omega = \{(u, i, y)\}$。
 - 第 $i$ 号物品 ➔ 向量 $\mathbf{b}_i$
 
 求解优化问题，得到参数 **A** 和 **B**，可采用梯度下降
+
 $$
 \min_{\mathbf{A}, \mathbf{B}} \sum_{(u,i,y) \in \Omega} \left( y - \langle \mathbf{a}_u, \mathbf{b}_i \rangle \right)^2.
 $$
-
 
 #### 矩阵补充
 
@@ -464,10 +472,13 @@ a 代表某个用户的embedding向量，图中的散点代表物品的embedding
 **损失函数**
 
 **Triplet hinge loss:**
+
 $$
 L(\mathbf{a}, \mathbf{b}^+, \mathbf{b}^-) = \max \{ 0, \cos(\mathbf{a}, \mathbf{b}^-) + m - \cos(\mathbf{a}, \mathbf{b}^+) \}
 $$
+
 **Triplet logistic loss:**
+
 $$
 L(\mathbf{a}, \mathbf{b}^+, \mathbf{b}^-) = \log(1 + \exp[\sigma \cdot (\cos(\mathbf{a}, \mathbf{b}^-) - \cos(\mathbf{a}, \mathbf{b}^+))]).
 $$
@@ -561,18 +572,14 @@ $$
 
 - 热门物品成为负样本的概率过大。
 
-- 物品 *i* 被抽样到的概率：  
-  $$ p_i \propto {\text{点击次数}} $$  
-
+- 物品 *i* 被抽样到的概率：  $ p_i \propto {\text{点击次数}} $
   物品越热门，被抽样到的概率就越高。
 
-- 预估用户对物品 *i* 的兴趣：  
-  $ \cos(\mathbf{a}, \mathbf{b}_i) $
+- 预估用户对物品 *i* 的兴趣： $ \cos(\mathbf{a}, \mathbf{b}_i) $ 
 
-- 做训练的时候，调整为：  
-  $$ \cos(\mathbf{a}, \mathbf{b}_i) - \log p_i $$  
+- 做训练的时候，调整为： $ \cos(\mathbf{a}, \mathbf{b}_i) - \log p_i $
   这样可以纠偏，避免打压热门物品
-  具体原理： $\cos(\mathbf{a}, \mathbf{b}_i) - \log p_i $作为训练用，物品越热门，这个值越小。当某热门物品与某冷门物品的$\cos(\mathbf{a}, \mathbf{b}_i)$相同时，因为热门物品的$\cos(\mathbf{a}, \mathbf{b}_i) - \log p_i $更小，其训练所用的目标值就更小。当模型训练完成后，输入相同的热门物品与冷门物品，热门物品的$\cos(\mathbf{a}, \mathbf{b}_i)$就大于冷门物品。
+  具体原理： $\cos(\mathbf{a}, \mathbf{b}_i) - \log p_i $ 作为训练用，物品越热门，这个值越小。当某热门物品与某冷门物品的 $\cos(\mathbf{a}, \mathbf{b}_i)$ 相同时，因为热门物品的 $\cos(\mathbf{a}, \mathbf{b}_i) - \log p_i $ 更小，其训练所用的目标值就更小。当模型训练完成后，输入相同的热门物品与冷门物品，热门物品的 $\cos(\mathbf{a}, \mathbf{b}_i)$ 就大于冷门物品。
 
 ![](images\2-7-2.png)
 
@@ -739,9 +746,9 @@ $$
 
   $$(\mathbf{a_1}, \mathbf{b_1}), (\mathbf{a_2}, \mathbf{b_2}), \dots, (\mathbf{a_n}, \mathbf{b_n}).$$
 
-- 负样本：$\{(\mathbf{a_i}, \mathbf{b_j})\}$，对于所有的 $i \neq j$。
+- 负样本： $ \{(\mathbf{a_i}, \mathbf{b_j})\}$，对于所有的 $i \neq j $。
 
-- 鼓励 $\cos(\mathbf{a_i}, \mathbf{b_i})$ 尽量大，$\cos(\mathbf{a_i}, \mathbf{b_j})$ 尽量小。
+- 鼓励 $ \cos(\mathbf{a_i}, \mathbf{b_i}) $  尽量大， $\cos(\mathbf{a_i}, \mathbf{b_j})$ 尽量小。
 
 **损失函数**
 
@@ -765,14 +772,15 @@ $$
 
 - 双塔模型的损失函数：
 
-  $$
-  L_{\text{main}}[i] = -\log \left( \frac{\exp(\cos(\mathbf{a_i}, \mathbf{b_i}) - \log p_i)}{\sum_{j=1}^{n} \exp(\cos(\mathbf{a_i}, \mathbf{b_j}) - \log p_j)} \right)
-  $$
+$$
+L_{\text{main}}[i] = -\log \left( \frac{\exp(\cos(\mathbf{a_i}, \mathbf{b_i}) - \log p_i)}{\sum_{j=1}^{n} \exp(\cos(\mathbf{a_i}, \mathbf{b_j}) - \log p_j)} \right)
+$$
 
 - 做梯度下降，减少损失函数：
-  $$
-  \frac{1}{n} \sum_{i=1}^{n} L_{\text{main}}[i]
-  $$
+
+$$
+\frac{1}{n} \sum_{i=1}^{n} L_{\text{main}}[i]
+$$
 
 #### 自监督学习
 
@@ -784,7 +792,7 @@ $$
 
 - 物品 $i$ 和 $j$ 的向量表征 $\mathbf{b'_i}$ 和 $\mathbf{b''_j}$ 有较低的相似度。
 
-- 鼓励 $\cos(\mathbf{b'_i}, \mathbf{b''_i})$ 尽量大，$\cos(\mathbf{b'_i}, \mathbf{b''_j})$ 尽量小。
+- 鼓励 $\cos(\mathbf{b'_i}, \mathbf{b''_i})$ 尽量大， $\cos(\mathbf{b'_i}, \mathbf{b''_j})$ 尽量小。
 
 **特征变换是将一个物品的特征值的向量变换为另一个向量**
 
@@ -826,9 +834,9 @@ $$
 **特征变换：Mask 一组关联的特征**
 
 - 一组特征相关联
-  - 受众性别：$\mathcal{U} = \{\text{男}, \text{女}, \text{中性}\}$
+  - 受众性别： $\mathcal{U} = \{\text{男}, \text{女}, \text{中性}\}$ 
 
-  - 类目：$\mathcal{V} = \{\text{美妆}, \text{数码}, \text{足球}, \text{摄影}, \text{科技}, \dots\}$
+  - 类目： $\mathcal{V} = \{\text{美妆}, \text{数码}, \text{足球}, \text{摄影}, \text{科技}, \dots\}$ 
 
   - $u = \text{女}$ 和 $v = \text{美妆}$ 同时出现的概率 $p(u, v)$ 大。
 
@@ -850,9 +858,9 @@ $$
   （如计算 类别 特征与 受众性别 特征的MI）
 
   
-  $$
-  MI(\mathcal{U}, \mathcal{V}) = \sum_{u \in \mathcal{U}} \sum_{v \in \mathcal{V}} p(u, v) \cdot \log \frac{p(u, v)}{p(u) \cdot p(v)}
-  $$
+$$
+MI(\mathcal{U}, \mathcal{V}) = \sum_{u \in \mathcal{U}} \sum_{v \in \mathcal{V}} p(u, v) \cdot \log \frac{p(u, v)}{p(u) \cdot p(v)}
+$$
 
 - 设一个物品一共有 $k$ 种特征。离线计算特征两两之间 MI，得到 $k \times k$ 的矩阵。
 
@@ -860,7 +868,7 @@ $$
 
 - *Mask* 种子及其相关的 $k/2$ 种特征，保留其余的 $k/2$ 种特征。
 
-- 比如某物品有四种特征$\{\text{ID}, \text{类别}, \text{关键词}, \text{城市}\} \quad  $，种子特征为关键词，与其最相关的特征为城市，那么mask后的特征就为$\{\text{ID}, \text{类别}, \text{default}, \text{default}\} \quad $
+- 比如某物品有四种特征 $\{\text{ID}, \text{类别}, \text{关键词}, \text{城市}\} \quad  $ ，种子特征为关键词，与其最相关的特征为城市，那么mask后的特征就为 $\{\text{ID}, \text{类别}, \text{default}, \text{default}\} \quad $ 
 
 - 好处与坏处
 
@@ -875,29 +883,29 @@ $$
 
 - 做两类特征变换，物品塔输出两组向量：
 
-  $$
-  \mathbf{b'_1}, \mathbf{b'_2}, \dots, \mathbf{b'_m} \quad \text{和} \quad \mathbf{b''_1}, \mathbf{b''_2}, \dots, \mathbf{b''_m}
-  $$
+$$
+\mathbf{b'_1}, \mathbf{b'_2}, \dots, \mathbf{b'_m} \quad \text{和} \quad \mathbf{b''_1}, \mathbf{b''_2}, \dots, \mathbf{b''_m}
+$$
 
 - 第 $i$ 个物品的损失函数：
 
-  $$
-  L_{\text{self}}[i] = -\log \left( \frac{\exp(\cos(\mathbf{b'_i}, \mathbf{b''_i}))}{\sum_{j=1}^{m} \exp(\cos(\mathbf{b'_i}, \mathbf{b''_j}))} \right)
-  $$
+$$
+L_{\text{self}}[i] = -\log \left( \frac{\exp(\cos(\mathbf{b'_i}, \mathbf{b''_i}))}{\sum_{j=1}^{m} \exp(\cos(\mathbf{b'_i}, \mathbf{b''_j}))} \right)
+$$
 
 ![](images\2-9-4.png)
 
 - 自监督学习的损失函数：
 
-  $$
-  L_{\text{self}}[i] = -\log \left( \frac{\exp(\cos(\mathbf{b'_i}, \mathbf{b''_i}))}{\sum_{j=1}^{m} \exp(\cos(\mathbf{b'_i}, \mathbf{b''_j}))} \right)
-  $$
+$$
+L_{\text{self}}[i] = -\log \left( \frac{\exp(\cos(\mathbf{b'_i}, \mathbf{b''_i}))}{\sum_{j=1}^{m} \exp(\cos(\mathbf{b'_i}, \mathbf{b''_j}))} \right)
+$$
   
 - 做梯度下降，减少自监督学习的损失：
 
-  $$
-  \frac{1}{m} \sum_{i=1}^{m} L_{\text{self}}[i]
-  $$
+$$
+\frac{1}{m} \sum_{i=1}^{m} L_{\text{self}}[i]
+$$
 
 #### 总结
 
@@ -916,9 +924,9 @@ $$
 
 - 做梯度下降，使得损失减少：
 
-  $$
-  \frac{1}{n} \sum_{i=1}^{n} L_{\text{main}}[i] + \alpha \cdot \frac{1}{m} \sum_{j=1}^{m} L_{\text{self}}[j].
-  $$
+$$
+\frac{1}{n} \sum_{i=1}^{n} L_{\text{main}}[i] + \alpha \cdot \frac{1}{m} \sum_{j=1}^{m} L_{\text{self}}[j].
+$$
 
 
 
@@ -983,9 +991,9 @@ $$
 
 - 预估用户对 path = $[a, b, c]$ 兴趣：
 
-  $$
-  p(a, b, c | \mathbf{x}) = p_1(a | \mathbf{x}) \times p_2(b | a; \mathbf{x}) \times p_3(c | a, b; \mathbf{x})
-  $$
+$$
+p(a, b, c | \mathbf{x}) = p_1(a | \mathbf{x}) \times p_2(b | a; \mathbf{x}) \times p_3(c | a, b; \mathbf{x})
+$$
 
 
 
@@ -1034,29 +1042,32 @@ $$
 $$
 p(a,b | \mathbf{x})= p_1(a | \mathbf{x}) \times p_2(b | a; \mathbf{x})
 $$
+
 算出 $4 \times K$ 个分数，每个分数对应一条路径，选出分数 *top 4* 路径。
 
 ![](images\2-10-7.png)
 
 对于每个被选中的节点 $a,b$，计算用户对路径 $[a, b,c]$ 的兴趣：
+
 $$
 p(a,b,c | \mathbf{x})= p(a,b | \mathbf{x}) \times p_3(c | a,b; \mathbf{x})
 $$
+
 再算出 $4 \times K$ 个分数，每个分数对应一条路径，选出分数 *top 4* 路径。
 
 **Beam Search**
 
 - 用户对 path = $[a, b, c]$ 兴趣：
 
-  $$
-  p(a, b, c | \mathbf{x}) = p_1(a | \mathbf{x}) \times p_2(b | a; \mathbf{x}) \times p_3(c | a, b; \mathbf{x})
-  $$
+$$
+p(a, b, c | \mathbf{x}) = p_1(a | \mathbf{x}) \times p_2(b | a; \mathbf{x}) \times p_3(c | a, b; \mathbf{x})
+$$
 
 - 最优的路径：
 
-  $$
-  [a^\star, b^\star, c^\star] = \arg\max\limits_{a, b, c} p(a, b, c | \mathbf{x})
-  $$
+$$
+[a^\star, b^\star, c^\star] = \arg\max\limits_{a, b, c} p(a, b, c | \mathbf{x})
+$$
 
 - 贪心算法（*beam size* = 1）选中的路径 $[a, b, c]$ 未必是最优的路径。
 
@@ -1080,17 +1091,17 @@ $$
   - item $\rightarrow$ List⟨path⟩，
   - path $\rightarrow$ List⟨item⟩。
 
-- 正样本 (user, item)：$\text{click}(\text{user}, \text{item}) = 1$。
+- 正样本 (user, item)： $\text{click}(\text{user}, \text{item}) = 1$。
 
 **学习神经网络参数**
 
-- 物品表征为 $J$ 条路径：$[a_1, b_1, c_1], \dots, [a_J, b_J, c_J]$。
+- 物品表征为 $J$ 条路径： $[a_1, b_1, c_1], \dots, [a_J, b_J, c_J]$ 。
 
 - 用户对路径 $[a, b, c]$ 的兴趣：
 
-  $$
-  p(a, b, c \mid \mathbf{x}) = p_1(a \mid \mathbf{x}) \times p_2(b \mid a; \mathbf{x}) \times p_3(c \mid a, b; \mathbf{x})
-  $$
+$$
+p(a, b, c \mid \mathbf{x}) = p_1(a \mid \mathbf{x}) \times p_2(b \mid a; \mathbf{x}) \times p_3(c \mid a, b; \mathbf{x})
+$$
 
 - 如果用户点击过物品，说明用户对 $J$ 条路径全都感兴趣。
 
@@ -1098,49 +1109,55 @@ $$
 
 - 损失函数：
   对 $J$ 条路径的兴趣的加和越大，损失函数就越小。
-  $$
-  \text{loss} = -\log \left( \sum_{j=1}^{J} p(a_j, b_j, c_j \mid \mathbf{x}) \right)
-  $$
+  
+$$
+\text{loss} = -\log \left( \sum_{j=1}^{J} p(a_j, b_j, c_j \mid \mathbf{x}) \right)
+$$
 
 **学习物品表征**
 
 - 用户 *user* 对路径 *path* = $[a, b, c]$ 的兴趣记作：
 
-  $$
-  p(\text{path} \mid \text{user}) = p(a, b, c \mid \mathbf{x})
-  $$
+$$
+p(\text{path} \mid \text{user}) = p(a, b, c \mid \mathbf{x})
+$$
 
 - 物品 *item* 与路径 *path* 的相关性：
-  $$
-  \text{score}(\text{item}, \text{path}) = \sum_{\text{user}} p(\text{path} \mid \text{user}) \times \text{click}(\text{user}, \text{item})
-  $$
-  $\text{click}(\text{user}, \text{item})$代表用户是否点击过物品，点击过就是 1 ，没点击过就是 0 。
 
-- 根据 $\text{score}(\text{item}, \text{path})$ 选出 $J$ 条路径作为 *item* 的表征。
+$$
+\text{score}(\text{item}, \text{path}) = \sum_{\text{user}} p(\text{path} \mid \text{user}) \times \text{click}(\text{user}, \text{item})
+$$
+
+  $\text{click}(\text{user}, \text{item})$ 代表用户是否点击过物品，点击过就是 1 ，没点击过就是 0 。
+
+- 根据 $ \text{score}(\text{item}, \text{path}) $ 选出 $J$ 条路径作为 *item* 的表征。
 
 ![](images\2-10-8.png)
 
 - 选出 $J$ 条路径 $\Pi = \{\text{path}_1, \dots, \text{path}_J\}$，作为物品的表征。
 
 - **损失函数**（选择与 *item* 高度相关的 *path*）：
-  $$
-  \text{loss}(\text{item}, \Pi) = -\log \left( \sum_{j=1}^{J} \text{score}(\text{item}, \text{path}_j) \right)
-  $$
+
+$$
+\text{loss}(\text{item}, \Pi) = -\log \left( \sum_{j=1}^{J} \text{score}(\text{item}, \text{path}_j) \right)
+$$
 
 - **正则项**（避免过多的 *item* 集中在一条 *path* 上）：
-  $$
-  \text{reg}(\text{path}_j) = (\text{number of items on path}_j)^4.
-  $$
+
+$$
+\text{reg}(\text{path}_j) = (\text{number of items on path}_j)^4.
+$$
 
 **用贪心算法更新路径**
 
-- 假设已经把物品表征为 $J$ 条路径 $\Pi = \{\text{path}_1, \dots, \text{path}_J\}$。现在要更新 $\Pi$ 中的路径
+- 假设已经把物品表征为 $J$ 条路径 $\Pi = \{\text{path}_1, \dots, \text{path}_J\}$ 。现在要更新 $\Pi$ 中的路径
 
-- 每次固定 $\{\text{path}_i\}_{i \neq l}$，并从未被选中的路径中，选出一条作为新的 $\text{path}_l$ ：
-  未被选择的路径不限于$J$ 条路径中，而是从外界选取路径。选择的范围可以是先前计算的 $\text{score}(\text{item}, \text{path})$ 较高的 $N$ 条路径。$\text{loss}(\text{item}, \Pi)$代表 $\{\text{path}_i\}$ 与 $\text{path}_l$ 构成的路径集合与物品的损失函数。$\text{reg}(\text{path}_l)$是为了防止一条路径上的物品数量太多。
-  $$
-  \text{path}_l \gets \arg\min_{\text{path}_l} \text{loss}(\text{item}, \Pi) + \alpha \cdot \text{reg}(\text{path}_l)
-  $$
+- 每次固定 $\{\text{path}_i\}_{i \neq l}$ ，并从未被选中的路径中，选出一条作为新的 $\text{path}_l$ ：
+  未被选择的路径不限于$J$ 条路径中，而是从外界选取路径。选择的范围可以是先前计算的 $\text{score}(\text{item}, \text{path})$ 较高的 $N$ 条路径。 $\text{loss}(\text{item}, \Pi)$ 代表 $\{\text{path}_i\}$ 与 $\text{path}_l$ 构成的路径集合与物品的损失函数。 $\text{reg}(\text{path}_l)$ 是为了防止一条路径上的物品数量太多。
+
+$$
+\text{path}_l \gets \arg\min_{\text{path}_l} \text{loss}(\text{item}, \Pi) + \alpha \cdot \text{reg}(\text{path}_l)
+$$
 
 - 选中的路径有较高的分数 $\text{score}(\text{item}, \text{path}_l)$，而且路径上的物品数量不会太多。
 
@@ -1150,9 +1167,9 @@ $$
 
 - 神经网络判断用户对路径的兴趣：
   
-  $$
-  p(\text{path} \mid \mathbf{x})
-  $$
+$$
+p(\text{path} \mid \mathbf{x})
+$$
   
 - 训练所需的数据：
   1. “物品 → 路径”的索引，
@@ -1164,7 +1181,7 @@ $$
 
 - 判断物品与路径的相关性：
 
-  物品 $\longleftarrow _{用户点击过物品} $ 用户 $\longrightarrow _{神经网络的打分}$ 路径
+  物品 $\longleftarrow _{用户点击过物品}$ 用户 $\longrightarrow _{神经网络的打分}$ 路径
 
 - 让每个物品关联 $J$ 条路径：
   - 物品和路径要有很高的相关性。
@@ -1178,19 +1195,19 @@ $$
 
 - 用 beam search 寻找分数 $p(\text{path} \mid \mathbf{x})$ 最高的 $s$ 条 $\text{path}$。
 
-- 利用索引 “$\text{path} \rightarrow \text{List}\{\text{item}\}$” 召回每条路径上的 $n$ 个物品。
+- 利用索引 “ $\text{path} \rightarrow \text{List}\{\text{item}\}$ ” 召回每条路径上的 $n$ 个物品。
 
-- 一共召回 *$s \times n$* 个物品，对物品做初步排序，返回分数最高的若干物品。
+- 一共召回 $s \times n$ 个物品，对物品做初步排序，返回分数最高的若干物品。
 
 **训练： 同时学习 用户—路径 和 物品—路径 的关系**
 
-- 一个物品被表征为 $J$ 条路径：$\text{path}_1, \dots, \text{path}_J$。
+- 一个物品被表征为 $J$ 条路径： $\text{path}_1, \dots, \text{path}_J$ 。
 
 - 如果用户点击过物品，则更新神经网络参数，使分数增大：
   
-  $$
-  \sum_{j=1}^{J} p(\text{path}_j \mid \mathbf{x}).
-  $$
+$$
+\sum_{j=1}^{J} p(\text{path}_j \mid \mathbf{x}).
+$$
 
 - 如果用户对路径的兴趣分数 $p(\text{path} \mid \mathbf{x})$ 较高，且用户点击过物品 $\text{item}$，则 $\text{item}$ 与 $\text{path}$ 具有相关性。
 
@@ -1310,9 +1327,9 @@ GeoHash召回
 
 - 设定可容忍的误伤概率为 $\delta$，那么最优参数为：
 
-  $$
-  k = 1.44 \cdot \ln \left( \frac{1}{\delta} \right), \quad m = 2n \cdot \ln \left( \frac{1}{\delta} \right)
-  $$
+$$
+k = 1.44 \cdot \ln \left( \frac{1}{\delta} \right), \quad m = 2n \cdot \ln \left( \frac{1}{\delta} \right)
+$$
 
 ![](images\2-12-3.png)
 
@@ -1369,7 +1386,7 @@ GeoHash召回
 
 - 对于点击率来说，模型实际上就是根据点击率来判断一个物品是否为被点击物品。这是一个二元分类问题，因此用交叉熵损失函数。
 
-- 总的损失函数：$ \sum_{i=1}^{4} \alpha_i \cdot \text{CrossEntropy}(y_i, p_i) $。
+- 总的损失函数： $ \sum_{i=1}^{4} \alpha_i \cdot \text{CrossEntropy}(y_i, p_i) $ 。
 - 对损失函数求梯度，做梯度下降更新参数。
 
 **训练**
@@ -1393,21 +1410,24 @@ GeoHash召回
 
 
 - **真实点击率**：
-  $$
-  p_{\text{true}} = \frac{n_+}{n_+ + n_-} \quad (\text{期望})
-  $$
+
+$$
+p_{\text{true}} = \frac{n_+}{n_+ + n_-} \quad (\text{期望})
+$$
+
 - **预估点击率**：
-  $$
-  p_{\text{pred}} = \frac{n_+}{n_+ + \alpha \cdot n_-} \quad (\text{期望})
-  $$
+
+$$
+p_{\text{pred}} = \frac{n_+}{n_+ + \alpha \cdot n_-} \quad (\text{期望})
+$$
+
 - 由上面两个等式可得校准公式 ：
 
-  $$
-  p_{\text{true}} = \frac{\alpha \cdot p_{\text{pred}}}{(1 - p_{\text{pred}}) + \alpha \cdot p_{\text{pred}}}。
-  $$
+$$
+p_{\text{true}} = \frac{\alpha \cdot p_{\text{pred}}}{(1 - p_{\text{pred}}) + \alpha \cdot p_{\text{pred}}}。
+$$
 
 ### Multi-gate Mixture-of-Experts (MMoE)
-
 
 
 ![](images\3-2-1.png)
@@ -1437,11 +1457,13 @@ GeoHash召回
 ### 预估分数的融合
 
 **简单的加权和**
+
 $$
 p_{\text{click}} + w_1 \cdot p_{\text{like}} + w_2 \cdot p_{\text{collect}} + \cdots
 $$
 
 **点击率乘以其他项的加权和**
+
 $$
 p_{\text{click}} \cdot \left( 1 + w_1 \cdot p_{\text{like}} + w_2 \cdot p_{\text{collect}} + \cdots \right)
 $$
@@ -1452,26 +1474,27 @@ $$
 **国内某短视频 APP 的融合分公式**
 
 - 根据预估时长 $p_{\text{time}}$，对 $n$ 篇候选视频做排序。
-- 如果某视频排名第 $r_{\text{time}}$，则它得分 $ \frac{1}{r_{\text{time}}^{\alpha} + \beta} $。
+- 如果某视频排名第 $r_{\text{time}}$ ，则它得分 $ \frac{1}{r_{\text{time}}^{\alpha} + \beta} $。
 - 对点击、点赞、转发、评论等预估分数做类似处理。
-- 最终融合分数：（$\alpha_{1,2,3\dots}$为超参数）
+- 最终融合分数：（ $\alpha_{1,2,3\dots}$ 为超参数）
 
-  $$
-  \frac{w_1}{r_{\text{time}}^{\alpha_1} + \beta_1} + \frac{w_2}{r_{\text{click}}^{\alpha_2} + \beta_2} + \frac{w_3}{r_{\text{like}}^{\alpha_3} + \beta_3} + \cdots
-  $$
+$$
+\frac{w_1}{r_{\text{time}}^{\alpha_1} + \beta_1} + \frac{w_2}{r_{\text{click}}^{\alpha_2} + \beta_2} + \frac{w_3}{r_{\text{like}}^{\alpha_3} + \beta_3} + \cdots
+$$
 
 **某电商的融合分公式**
 
 - 电商的转化流程：
 
-  $$ \text{曝光} \rightarrow \text{点击} \rightarrow \text{加购物车} \rightarrow \text{付款} $$
+  $$\text{曝光} \rightarrow \text{点击} \rightarrow \text{加购物车} \rightarrow \text{付款}$$
 
 - 模型预估：$ p_{\text{click}} $、$ p_{\text{cart}} $、$ p_{\text{pay}} $。
 
-- 最终融合分数：（$\alpha_{1,2,3,4\dots}$为超参数）
-  $$
-  p_{\text{click}}^{\alpha_1} \times p_{\text{cart}}^{\alpha_2} \times p_{\text{pay}}^{\alpha_3} \times \text{price}^{\alpha_4}
-  $$
+- 最终融合分数：（ $\alpha_{1,2,3,4\dots}$ 为超参数）
+  
+$$
+p_{\text{click}}^{\alpha_1} \times p_{\text{cart}}^{\alpha_2} \times p_{\text{pay}}^{\alpha_3} \times \text{price}^{\alpha_4}
+$$
 
 ### 视频播放建模
 
@@ -1489,7 +1512,7 @@ $$
 
 ![](images\3-4-1.png)
 
-如果 $ p = y $，那么 $ \exp(z) = t $。
+如果 $p = y$，那么 $\exp(z) = t$。
 
 ![](images\3-4-2.png)
 
@@ -1499,12 +1522,12 @@ $$
 - 实际观测的播放时长记作 $t$。（*如果没有点击，则 $t = 0$。*）
 - 做训练：最小化交叉熵损失
 
-  $$
-  - \left( \frac{t}{1 + t} \cdot \log p + \frac{1}{1 + t} \cdot \log (1 - p) \right)。
-  $$
+$$
+\left( \frac{t}{1 + t} \cdot \log p + \frac{1}{1 + t} \cdot \log (1 - p) \right)。
+$$
 
-- 做推理：把 $ \exp(z) $ 作为播放时长的预估。
-- 把 $ \exp(z) $ 作为融合公式中的一项。
+- 做推理：把 $\exp(z)$ 作为播放时长的预估。
+- 把 $\exp(z)$ 作为融合公式中的一项。
 
 #### 视频完播
 
@@ -1514,9 +1537,9 @@ $$
 
 - 让预估播放率 $p$ 拟合 $y$：
 
-  $$
-  \text{loss} = y \cdot \log p + (1 - y) \cdot \log (1 - p)。
-  $$
+$$
+\text{loss} = y \cdot \log p + (1 - y) \cdot \log (1 - p)。
+$$
 
 - 线上预估完播率，模型输出 $p = 0.73$，意思是预计播放 $73 \%$
 
@@ -1527,9 +1550,9 @@ $$
 - 做二元分类训练模型：播放 >80% vs 播放 <80%。
 - 线上预估完播率，模型输出 $p = 0.73$，意思是：
 
-  $$
-  \mathbb{P}(\text{播放} > 80\%) = 0.73。
-  $$
+$$
+\mathbb{P}(\text{播放} > 80\%) = 0.73。
+$$
 
 ![](images\3-4-3.png)
 
