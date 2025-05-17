@@ -2,33 +2,34 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>我的笔记</title>
+  <title>笔记文档</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Docsify 样式 -->
+  <!-- 样式 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
 </head>
 <body>
   <div id="app">加载中…</div>
 
+  <!-- ✅ Docsify 配置 -->
   <script>
+    const { markedKatex } = window.markedKatexExtension;
     window.$docsify = {
       name: '笔记文档',
       loadSidebar: true,
       subMaxLevel: 2,
       markdown: {
-        smartypants: true
+        renderer: markedKatex({ throwOnError: false })
       }
     };
   </script>
 
-  <!-- ✅ Docsify 主体 -->
+  <!-- ✅ 加载 Docsify 和 KaTeX 插件 -->
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-
-  <!-- ✅ MathJax 渲染器（务必放在 docsify 后加载）-->
-  <script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked-katex-extension@4"></script>
 </body>
 </html>
 
